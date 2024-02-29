@@ -1,0 +1,5 @@
+#@data/values-schema
+---
+message: "traveler"
+replicas: 1
+namespace: ""

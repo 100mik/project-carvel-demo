@@ -1,0 +1,20 @@
+apiVersion: kappctrl.k14s.io/v1alpha1
+kind: App
+metadata:
+  name: simple-app
+  namespace: default
+spec:
+  serviceAccountName: default-ns-sa
+  fetch:
+  - imgpkgBundle:
+      image: index.docker.io/100mik/demo-app@sha256:7a888f63ffcbf78d17984a40c3f12823f6d3e0a6274f73524fe7f76fc542541c
+  template:
+  - ytt:
+      paths:
+      - "config"
+  - kbld:
+      paths:
+      - "-"
+      - ".imgpkg/images.yml" # ensures sha references present at the time of bundling
+  deploy:
+  - kapp: {}
