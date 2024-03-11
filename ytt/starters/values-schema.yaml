@@ -1,0 +1,6 @@
+#! #@data/values-schema
+#! ---
+#! channel: ""
+#! node_ports: [30000]
+#! #@schema/nullable
+#! namespace: ""
