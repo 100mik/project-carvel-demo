@@ -1,9 +1,35 @@
-#@ load("@ytt:data","data")
+#@ load("@ytt:data", "data")
+#@ load("@ytt:template", "template")
+#@ ports = [31111, 31112, 31113]
 
 #@ def labels():
-app: simple-app
+app: #@ data.values.app_name
 channel: dev-unstable
 #@ end
+
+#@ def foobar():
+#@ if "namespace" in data.values:
+#@   return {"namespace": data.values.namespace}
+#@ else:
+#@   return {}
+#@ end
+#@ end
+
+#@ if/end "namespace" in data.values:
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: #@ data.values.namespace
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-app
+  replace: #@ template.replace(foobar())
+data:
+  hello_msg: friend
 ---
 apiVersion: v1
 kind: Service
@@ -13,11 +39,11 @@ metadata:
 spec:
   type: NodePort
   ports:
-  - port: 80
-    targetPort: 80
-    nodePort: 31111
+    #@ for/end port in ports:
+    - port: 80
+      targetPort: 80
+      nodePort: #@ port
   selector: #@ labels()
-    
 ---
 apiVersion: apps/v1
 kind: Deployment
@@ -25,7 +51,6 @@ metadata:
   namespace: default
   name: simple-app
 spec:
-  replicas: #@ data.values.replicas
   selector:
     matchLabels: #@ labels()
   template:
@@ -41,10 +66,3 @@ spec:
             configMapKeyRef:
               name: simple-app
               key: hello_msg
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: simple-app
-data:
-  hello_msg: #@ data.values.message
