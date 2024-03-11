@@ -1,5 +1,12 @@
 ---
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: simple-app
+data:
+  hello_msg: friend
+---
+apiVersion: v1
 kind: Service
 metadata:
   namespace: default
@@ -39,10 +46,3 @@ spec:
             configMapKeyRef:
               name: simple-app
               key: hello_msg
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: simple-app
-data:
-  hello_msg: friend
