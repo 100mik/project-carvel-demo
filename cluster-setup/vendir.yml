@@ -1,0 +1,21 @@
+---
+apiVersion: vendir.k14s.io/v1alpha1
+kind: Config
+directories:
+- path: kapp-controller
+  contents:
+  - path: .
+    githubRelease:
+      slug: carvel-dev/kapp-controller
+      tag: v0.50.0
+      assetNames: ["release.yml"]
+- path: nginx-ingress
+  contents:
+  - path: .
+    git:
+      url: https://github.com/kubernetes/ingress-nginx.git
+      ref: controller-v1.10.0
+      depth: 1
+    includePaths:
+    - deploy/static/provider/kind/deploy.yaml
+
