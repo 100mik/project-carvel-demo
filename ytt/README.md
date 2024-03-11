@@ -1,24 +1,21 @@
 ### ytt
 
 ### Speaker notes
-- Intro
-    - Start off with base config, deduplicate labels with a function (To run `ytt -f config`)
-    - Add templating, ytt fails without defaults
-        - 💡 have to move out of `enter`
-        - 💡 maybe do a for-loop first with ports (?)
-    - add a data-value for the label "channel", and maybe the ports
-        - showcase from the cli through --data-values
-        - add a schema
-    - Demonstrate defaulting with values schema, ytt respects defaults
-        - 💡 don't showcase defaults
+
+- Templating
+    - Start off with base config
+    - `node_port` variables
+    - Deduplicate labels with a function (To run `ytt -f starters/`)
+    - Introduce a for-loop for the ports
+    - Add a data-value for the label "channel"
+        - Show that it fails
+        - Pass it through the cli with --data-value
+    - Showcase a data-values file, with "channel", "node_ports" and "namespace"
+    - Showcase another --data-values-file
+    - Activate values-schema, and showcase that changing the port type to ["30000"] fails
     - Introduce conditional namespacing (while rendering ytt)
-        - 🤔 then you kinda-sorta need to use template.replace
-    - use another data-values file with --data-values-file
-    - Render template live while toying with values file (`ytt -f config --data-values-file values.yaml`) 
+
 - Overlays
-    - Start with an overlay that annotates all resources with `foo: bar`
-        - 💡 Use `apiVersion: v1soumik1` instead
-    - Scope overlay to config map only
-    - Show how an empty overlay can remove a resource
-    (????)
-    - Change overlay to `kapp.k14s.io/versioned: ""` , mention that we will see what this does next
+    - Start with an overlay that changes `apiVersion: v1soumik1`
+    - Scope overlay to deployment only
+    - Show how an empty overlay can remove a resource (remove service)
