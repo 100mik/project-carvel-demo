@@ -1,5 +1,6 @@
 #@data/values-schema
 ---
-message: "traveler"
-replicas: 1
+channel: ""
+domains: ["echo"]
+#@schema/nullable
 namespace: ""
