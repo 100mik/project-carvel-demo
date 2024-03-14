@@ -1,0 +1,50 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: carvel.garnier.wf.1.0.0
+spec:
+  refName: carvel.garnier.wf
+  releasedAt: "2024-03-14T09:18:43Z"
+  template:
+    spec:
+      deploy:
+      - kapp: {}
+      fetch:
+      - imgpkgBundle:
+          image: localhost:5001/demo/carvel-package@sha256:3c22e3c10c061f1fa474af53257f091da2d7817fbbd5ae13ab301a69a0f8bf0d
+      template:
+      - ytt:
+          paths:
+          - config
+      - kbld:
+          paths:
+          - '-'
+          - .imgpkg/images.yml
+  valuesSchema:
+    openAPIv3:
+      additionalProperties: false
+      properties:
+        channel:
+          default: ""
+          description: Sets the channel label on the deployment
+          title: Release channel
+          type: string
+        domains:
+          default: []
+          description: Sets the subdomains at which the application will be publicly
+            available
+          items:
+            default: echo
+            type: string
+          title: Subdomains
+          type: array
+        namespace:
+          default: null
+          description: Sets the namespace in which to deploy the application. Defaults
+            to ''
+          nullable: true
+          title: Namespace
+          type: string
+      type: object
+  version: 1.0.0

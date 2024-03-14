@@ -1,0 +1,52 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: carvel.garnier.wf.0.0.0
+spec:
+  refName: carvel.garnier.wf
+  releasedAt: null
+  template:
+    spec:
+      deploy:
+      - kapp: {}
+      fetch:
+      - git: {}
+      template:
+      - ytt:
+          paths:
+          - config
+      - kbld: {}
+  valuesSchema:
+    openAPIv3: null
+  version: 0.0.0
+
+---
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  creationTimestamp: null
+  name: carvel.garnier.wf
+spec:
+  displayName: Carvel Demo
+  longDescription: A cool app to showcase Carvel at Kubecon EU 2024
+  shortDescription: Kubecon Carvel Demo
+
+---
+apiVersion: packaging.carvel.dev/v1alpha1
+kind: PackageInstall
+metadata:
+  annotations:
+    kctrl.carvel.dev/local-fetch-0: .
+  creationTimestamp: null
+  name: carvel
+spec:
+  packageRef:
+    refName: carvel.garnier.wf
+    versionSelection:
+      constraints: 0.0.0
+  serviceAccountName: carvel-sa
+status:
+  conditions: null
+  friendlyDescription: ""
+  observedGeneration: 0
