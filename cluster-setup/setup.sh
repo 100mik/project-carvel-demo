@@ -55,7 +55,7 @@ echo "~~ Setting nginx ingress"
 if kapp inspect --app nginx-ingress >/dev/null; then
   echo "~~ Setting nginx ingress > already installed, skipping"
 else
-  vendir sync --locked
+  vendir sync --locked --file "$SCRIPT_DIR/vendir.yml" --lock-file "$SCRIPT_DIR/vendir.lock.yml"
   kapp deploy --app nginx-ingress --file "$SCRIPT_DIR/nginx-ingress/deploy/static/provider/kind/deploy.yaml" --yes
   echo "~~ Setting nginx ingress > done"
 fi
@@ -64,7 +64,7 @@ echo "~~ Setting kapp-controller"
 if kapp inspect --app kapp-controller >/dev/null; then
   echo "~~ Setting kapp controller > already installed, skipping"
 else
-  vendir sync --locked
+  vendir sync --locked --file "$SCRIPT_DIR/vendir.yml" --lock-file "$SCRIPT_DIR/vendir.lock.yml"
   kapp deploy --app kapp-controller --file "$SCRIPT_DIR/kapp-controller/release.yml" --file "$SCRIPT_DIR/kapp-controller-sa.yml" --yes
   echo "~~ Setting kapp controller > done"
 fi
