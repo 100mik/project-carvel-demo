@@ -9,7 +9,7 @@ spec:
   serviceAccountName: kapp-controller-sa
   fetch:
   - imgpkgBundle:
-      image: kind-registry:5000/carvel-app:reference
+      image: kind-registry.local:5000/demo/carvel-app:reference
   template:
   - ytt:
       paths:
