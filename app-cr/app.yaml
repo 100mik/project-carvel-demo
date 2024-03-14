@@ -1,20 +1,66 @@
+#@ namespace = "demo-app"
+---
 apiVersion: kappctrl.k14s.io/v1alpha1
 kind: App
 metadata:
   name: simple-app
   namespace: default
 spec:
-  serviceAccountName: default-ns-sa
+  serviceAccountName: kapp-controller-sa
   fetch:
   - imgpkgBundle:
-      image: index.docker.io/100mik/demo-app@sha256:7a888f63ffcbf78d17984a40c3f12823f6d3e0a6274f73524fe7f76fc542541c
+      image: kind-registry:5000/carvel-app:reference
   template:
   - ytt:
       paths:
       - "config"
+      valuesFrom:
+      - secretRef:
+        name: simple-app-config
   - kbld:
       paths:
       - "-"
-      - ".imgpkg/images.yml" # ensures sha references present at the time of bundling
+      - ".imgpkg/images.yml" #! ensures sha references present at the time of bundling
   deploy:
   - kapp: {}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: simple-app-config
+  namespace: default
+stringData:
+  namespace: #@ namespace
+
+
+
+#! Service account that kapp-controller will use to deploy your app
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: demo-app-sa
+  namespace: default
+---
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: demo-app-role
+rules:
+- apiGroups: [""]
+  resources: ["deployment", "service", "configmap"]
+  verbs: ["*"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: demo-app-binding
+subjects:
+- kind: ServiceAccount
+  name: demo-app-sa
+  namespace: default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: demo-app-role
+
