@@ -1,0 +1,9 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  creationTimestamp: null
+  name: carvel.garnier.wf
+spec:
+  displayName: Carvel Demo
+  longDescription: A cool app to showcase Carvel at Kubecon EU 2024
+  shortDescription: Kubecon Carvel Demo

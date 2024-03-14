@@ -1,0 +1,25 @@
+apiVersion: kctrl.carvel.dev/v1alpha1
+kind: PackageBuild
+metadata:
+  creationTimestamp: null
+  name: carvel.garnier.wf
+spec:
+  release:
+  - resource: {}
+  template:
+    spec:
+      app:
+        spec:
+          deploy:
+          - kapp: {}
+          template:
+          - ytt:
+              paths:
+              - config
+          - kbld: {}
+      export:
+      - imgpkgBundle:
+          image: localhost:5001/demo/carvel-package
+          useKbldImagesLock: true
+        includePaths:
+        - config
