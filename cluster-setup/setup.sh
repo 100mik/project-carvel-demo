@@ -45,8 +45,6 @@ On macOS:
   exit 1
 fi
 
-kubectl config set-context --current --namespace=default
-
 ###########################################
 # 🏗️ Registry + Cluster
 ###########################################
@@ -81,6 +79,8 @@ if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "${reg_name}
   docker network connect "kind" "${reg_name}"
   echo "~~ Connecting local registry to [kind] network > done"
 fi
+
+kubectl config set-context --current --namespace=default
 
 
 ###########################################
@@ -118,12 +118,10 @@ else
   echo "~~ Setting kapp controller > done"
 fi
 
-
 ###########################################
-# 📦️ install package repository
-###########################################
-kubectl apply -f "$SCRIPT_DIR/install-ns.yml"
-
+# 🥾️ Bootstrap local registry with required
+#    imgpkg bundles
+############################################
 echo "~~ Relocating package repository to local registry"
 if imgpkg tag resolve -i kind-registry.local:5000/demo/carvel-package-repository:1.0.0 2>/dev/null; then
   echo "~~ Relocating package repository to local registry > already present, skipping"
@@ -132,6 +130,20 @@ else
     --to-repo kind-registry.local:5000/demo/carvel-package-repository
   echo "~~ Relocating package repository to local registry > done"
 fi
+
+echo "~~ Pushing app config to local registry"
+if imgpkg tag resolve -i kind-registry.local:5000/demo/carvel-app:reference 2>/dev/null; then
+  echo "~~ Pushing app config to local registry > already present, skipping"
+else
+  imgpkg push -f "$SCRIPT_DIR/../bundling" \
+    --bundle kind-registry.local:5000/demo/carvel-app:reference
+  echo "~~ Pushing app config to local registry > done"
+fi
+
+###########################################
+# 📦️ install package repository
+###########################################
+kubectl apply -f "$SCRIPT_DIR/install-ns.yml"
 
 echo "~~ Installing package repository"
 if kctrl package repo list -n installs | grep -q "Reconcile succeeded"; then
