@@ -45,11 +45,38 @@ On macOS:
   exit 1
 fi
 
+
+# TODO: clean up
+reg_name='kind-registry'
+reg_port='5001'
+if [ "$(docker inspect -f '{{.State.Running}}' "${reg_name}" 2>/dev/null || true)" != 'true' ]; then
+  docker run \
+    -d --restart=always -p "127.0.0.1:${reg_port}:5000" --network bridge --name "${reg_name}" \
+    registry:2
+fi
+
+
 if ! kind get clusters | grep "$CLUSTER_NAME"; then
   echo "~~ Setting up kind cluster"
   kind create cluster --config "$SCRIPT_DIR/kind.yml" --name "$CLUSTER_NAME"
   echo "~~ Setting up kind cluster > done"
 fi
+
+# TODO: cleanup
+REGISTRY_DIR="/etc/containerd/certs.d/localhost:${reg_port}"
+for node in $(kind get nodes --name ${CLUSTER_NAME}); do
+  docker exec "${node}" mkdir -p "${REGISTRY_DIR}"
+  cat <<EOF | docker exec -i "${node}" cp /dev/stdin "${REGISTRY_DIR}/hosts.toml"
+[host."http://${reg_name}:5000"]
+EOF
+done
+
+if [ "$(docker inspect -f='{{json .NetworkSettings.Networks.kind}}' "${reg_name}")" = 'null' ]; then
+  docker network connect "kind" "${reg_name}"
+fi
+
+# TODO: add documentation?
+
 
 echo "~~ Setting nginx ingress"
 if kapp inspect --app nginx-ingress >/dev/null; then
