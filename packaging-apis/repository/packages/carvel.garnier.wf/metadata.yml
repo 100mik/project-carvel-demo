@@ -3,7 +3,6 @@ kind: PackageMetadata
 metadata:
   creationTimestamp: null
   name: carvel.garnier.wf
-  namespace: installs
 spec:
   displayName: Carvel Demo
   longDescription: A cool app to showcase Carvel at Kubecon EU 2024
