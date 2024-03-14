@@ -3,6 +3,7 @@ kind: Package
 metadata:
   creationTimestamp: null
   name: carvel.garnier.wf.1.0.0
+  namespace: installs
 spec:
   refName: carvel.garnier.wf
   releasedAt: "2024-03-14T14:22:19Z"

@@ -111,5 +111,6 @@ echo "~~ Configuring CoreDNS for 127.0.0.1.nip.io > done"
 
 kapp deploy --app demo-package \
   --namespace default \
+  --file "$SCRIPT_DIR/install-ns.yml" \
   --file "$SCRIPT_DIR/../packaging-apis/repository/packages/carvel.garnier.wf/" \
   --yes
