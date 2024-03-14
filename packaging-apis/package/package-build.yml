@@ -19,7 +19,7 @@ spec:
           - kbld: {}
       export:
       - imgpkgBundle:
-          image: kind-registry.local:5000/demo/carvel-package
+          image: dgarnier963/carvel-package
           useKbldImagesLock: true
         includePaths:
         - config

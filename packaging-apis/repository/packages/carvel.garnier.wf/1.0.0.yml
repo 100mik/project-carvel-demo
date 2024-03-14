@@ -3,17 +3,16 @@ kind: Package
 metadata:
   creationTimestamp: null
   name: carvel.garnier.wf.1.0.0
-  namespace: installs
 spec:
   refName: carvel.garnier.wf
-  releasedAt: "2024-03-14T14:22:19Z"
+  releasedAt: "2024-03-14T16:31:30Z"
   template:
     spec:
       deploy:
       - kapp: {}
       fetch:
       - imgpkgBundle:
-          image: kind-registry.local:5000/demo/carvel-package@sha256:3c22e3c10c061f1fa474af53257f091da2d7817fbbd5ae13ab301a69a0f8bf0d
+          image: index.docker.io/dgarnier963/carvel-package@sha256:3c22e3c10c061f1fa474af53257f091da2d7817fbbd5ae13ab301a69a0f8bf0d
       template:
       - ytt:
           paths:
