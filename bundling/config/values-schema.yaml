@@ -1,6 +1,15 @@
 #@data/values-schema
 ---
+
+#@schema/title "Release channel"
+#@schema/desc "Sets the channel label on the deployment"
 channel: ""
+
+#@schema/title "Subdomains"
+#@schema/desc "Sets the subdomains at which the application will be publicly available"
 domains: ["echo"]
+
+#@schema/title "Namespace"
+#@schema/desc "Sets the namespace in which to deploy the application. Defaults to ''"
 #@schema/nullable
 namespace: ""
