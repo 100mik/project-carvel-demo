@@ -1,0 +1,28 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: Package
+metadata:
+  creationTimestamp: null
+  name: cert-manager.corp.com.1.12.3
+spec:
+  refName: cert-manager.corp.com
+  releasedAt: "2023-08-09T16:55:46Z"
+  template:
+    spec:
+      deploy:
+      - kapp: {}
+      fetch:
+      - imgpkgBundle:
+          image: index.docker.io/100mik/certmanpac@sha256:e9fdfbe90176e8ab1922c62178cd7d7572a99111a9af97845bb900b99de0fb4d
+      template:
+      - ytt:
+          paths:
+          - upstream
+      - kbld:
+          paths:
+          - '-'
+          - .imgpkg/images.yml
+  valuesSchema:
+    openAPIv3:
+      default: null
+      nullable: true
+  version: 1.12.3
