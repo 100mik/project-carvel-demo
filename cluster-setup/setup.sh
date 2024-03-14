@@ -45,6 +45,7 @@ On macOS:
   exit 1
 fi
 
+kubectl config set-context --current --namespace=default
 
 ###########################################
 # 🏗️ Registry + Cluster
@@ -140,3 +141,12 @@ else
     --url kind-registry.local:5000/demo/carvel-package-repository:1.0.0 -n installs
   echo "~~ Installing package repository > done"
 fi
+
+
+###########################################
+# 🥾️ Bootstrap the cluster by pulling http-echo
+#    this makes for a faster demo
+###########################################
+ytt -f "$SCRIPT_DIR/../kapp/config" |
+  kapp deploy -a bootstrap -f - --yes
+kapp delete -a bootstrap --yes
