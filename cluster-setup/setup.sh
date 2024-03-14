@@ -60,6 +60,9 @@ if ! kind get clusters | grep "$CLUSTER_NAME"; then
   echo "~~ Setting up kind cluster"
   kind create cluster --config "$SCRIPT_DIR/kind.yml" --name "$CLUSTER_NAME"
   echo "~~ Setting up kind cluster > done"
+  echo "~~ Creating namespace for Packaging APIs"
+  kubectl create ns installs
+  echo "~~ Creating namespace for Packaging APIs > done"
 fi
 
 # TODO: cleanup

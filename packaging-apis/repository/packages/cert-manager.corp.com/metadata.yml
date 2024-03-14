@@ -1,0 +1,9 @@
+apiVersion: data.packaging.carvel.dev/v1alpha1
+kind: PackageMetadata
+metadata:
+  creationTimestamp: null
+  name: cert-manager.corp.com
+spec:
+  displayName: Cert Manager
+  longDescription: Manager Issuers and Certificates in Cluster via declarative resources
+  shortDescription: Issue and manage certificates
