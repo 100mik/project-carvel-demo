@@ -19,7 +19,7 @@ spec:
           - kbld: {}
       export:
       - imgpkgBundle:
-          image: localhost:5001/demo/carvel-package
+          image: kind-registry.local:5000/demo/carvel-package
           useKbldImagesLock: true
         includePaths:
         - config

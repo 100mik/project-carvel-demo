@@ -5,14 +5,14 @@ metadata:
   name: carvel.garnier.wf.1.0.0
 spec:
   refName: carvel.garnier.wf
-  releasedAt: "2024-03-14T09:18:43Z"
+  releasedAt: "2024-03-14T14:22:19Z"
   template:
     spec:
       deploy:
       - kapp: {}
       fetch:
       - imgpkgBundle:
-          image: localhost:5001/demo/carvel-package@sha256:3c22e3c10c061f1fa474af53257f091da2d7817fbbd5ae13ab301a69a0f8bf0d
+          image: kind-registry.local:5000/demo/carvel-package@sha256:3c22e3c10c061f1fa474af53257f091da2d7817fbbd5ae13ab301a69a0f8bf0d
       template:
       - ytt:
           paths:
