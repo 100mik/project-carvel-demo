@@ -105,3 +105,11 @@ kubectl get configmap coredns \
       --file "$SCRIPT_DIR/coredns-overlay.yml" |
     kubectl apply --filename -
 echo "~~ Configuring CoreDNS for 127.0.0.1.nip.io > done"
+
+
+# TODO
+
+kapp deploy --app demo-package \
+  --namespace default \
+  --file "$SCRIPT_DIR/../packaging-apis/repository/packages/carvel.garnier.wf/" \
+  --yes
