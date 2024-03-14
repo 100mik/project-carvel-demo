@@ -16,7 +16,7 @@ spec:
       - "config"
       valuesFrom:
       - secretRef:
-        name: simple-app-config
+          name: simple-app-config
   - kbld:
       paths:
       - "-"
