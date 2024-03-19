@@ -3,6 +3,7 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
 - path: kapp-controller
+  lazy: true
   contents:
   - path: .
     githubRelease:
@@ -10,6 +11,7 @@ directories:
       tag: v0.50.0
       assetNames: ["release.yml"]
 - path: nginx-ingress
+  lazy: true
   contents:
   - path: .
     git:
