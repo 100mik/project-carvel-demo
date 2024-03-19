@@ -1,0 +1,4 @@
+---
+channel: app-crd
+domains: ["app-echo"]
+namespace: app-ns
