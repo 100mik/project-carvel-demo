@@ -164,3 +164,16 @@ fi
 ytt -f "$SCRIPT_DIR/../kapp/config" |
   kapp deploy -a bootstrap -f - --yes
 kapp delete -a bootstrap --yes
+
+##########################################
+# 🖼️ Re-tag images
+##########################################
+for IMAGE_NAME in hashicorp/http-echo:1.0.0
+do
+  echo "~~ Copying $IMAGE_NAME to local registry"
+  docker pull "$IMAGE_NAME"
+  docker tag "$IMAGE_NAME" "localhost:5000/$IMAGE_NAME"
+  docker push "localhost:5000/$IMAGE_NAME"
+  echo "~~ Copying $IMAGE_NAME to local registry > done"
+done
+
