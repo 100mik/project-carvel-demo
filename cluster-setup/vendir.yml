@@ -3,17 +3,17 @@ apiVersion: vendir.k14s.io/v1alpha1
 kind: Config
 directories:
 - path: kapp-controller
-  lazy: true
   contents:
   - path: .
+    lazy: true
     githubRelease:
       slug: carvel-dev/kapp-controller
       tag: v0.50.0
       assetNames: ["release.yml"]
 - path: nginx-ingress
-  lazy: true
   contents:
   - path: .
+    lazy: true
     git:
       url: https://github.com/kubernetes/ingress-nginx.git
       ref: controller-v1.10.0
