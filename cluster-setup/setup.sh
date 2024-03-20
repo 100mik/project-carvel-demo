@@ -62,6 +62,8 @@ if ! kind get clusters | grep "$CLUSTER_NAME"; then
   echo "~~ Setting up kind cluster"
   kind create cluster --config "$SCRIPT_DIR/kind.yml" --name "$CLUSTER_NAME"
   echo "~~ Setting up kind cluster > done"
+else
+  kubectl config use-context kind-carvel
 fi
 
 REGISTRY_DIR="/etc/containerd/certs.d/localhost:${reg_port}"
