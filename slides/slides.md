@@ -232,3 +232,6 @@ Thank you!
 ▀▀▀▀▀▀▀ ▀▀▀ ▀▀ ▀ ▀▀   ▀▀▀
 ```
 
+🤝️ Join `#carvel` on Kubernetes slack
+
+🐦️ `@carvel_dev`
